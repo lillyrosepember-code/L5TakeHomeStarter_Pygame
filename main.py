@@ -15,6 +15,7 @@ red = (255, 0, 0)
 white = (255, 255, 255)
 blue = (0, 0, 255)
 orange = (255, 165, 0)
+score = 0
 
 
 class player(pygame.sprite.Sprite):
@@ -63,9 +64,11 @@ class Brick(pygame.sprite.Sprite):
         self.speed = random.randint(3, 6)
 
     def update(self):
+        global score
         self.rect.y += self.speed
         if self.rect.top > height:
             self.kill()
+            score += 1
 
 
 class poisonBrick(Brick):
@@ -109,6 +112,7 @@ def main():
                     sys.exit()
 
         if not game_over:
+            global score
             player1.move()
             player1.updateSpeed()
             brick_timer += 1
@@ -146,7 +150,8 @@ def main():
             )
 
             screen.blit(text, text_rect)
-
+        text = font.render(f"Score: {score}", True, blue)
+        screen.blit(text, (10, 10))
         pygame.display.flip()
 
     pygame.quit()
